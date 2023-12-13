@@ -1,10 +1,16 @@
-# Use an official PHP 8.1 image as the base image with Apache
-FROM php:8.1-apache
+# Use the base image with PHP and other necessary configurations
+FROM docker.io/library/php:8.1-fpm
+
+# Update package lists and install required dependencies
+RUN apt-get update && apt-get install -y \
+    zlib1g-dev \
+    libicu-dev \
+    g++ \
+    git \
+    unzip 
 
 # Install the PHP intl extension
-RUN apt-get update && \
-    apt-get install -y libicu-dev && \
-    docker-php-ext-configure intl && \
+RUN docker-php-ext-configure intl && \
     docker-php-ext-install intl
 
 # Set the working directory inside the container
@@ -34,4 +40,4 @@ RUN chown -R www-data:www-data /var/www/html
 EXPOSE 8080
 
 # Run PHP's built-in server using `php spark serve`
-CMD ["php", "spark", "serve", "--host=0.0.0.0", "--port=8080"]
+CMD ["php", "spark", "serve", "--host 0.0.0.0", "--port 8080"]
