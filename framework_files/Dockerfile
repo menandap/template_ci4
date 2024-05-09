@@ -44,8 +44,8 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/*.conf \
     && sed -ri -e 's!/var/www/!/var/www/html/public!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Expose port 8080 inside the container
-EXPOSE 8080
+# Expose port 80 inside the container
+EXPOSE 80
 
 # Start Apache
 CMD ["apache2-foreground"]
